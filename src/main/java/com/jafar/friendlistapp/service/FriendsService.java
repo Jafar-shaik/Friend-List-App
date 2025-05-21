@@ -18,11 +18,20 @@ public class FriendsService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveFriendToUser(Friends friends, String  userName){
+    public Friends saveFriend(Friends friends){
+        return friendsRepository.save(friends);
+    }
+
+    public void deleteFriendById(ObjectId id){
+        friendsRepository.deleteById(id);
+    }
+
+    public List<Friends> saveFriendToUser(Friends friends, String  userName){
         User foundUser = userRepository.findUserByName(userName);
         Friends savedFriends = friendsRepository.save(friends);
         foundUser.getFriends().add(savedFriends);
         userRepository.save(foundUser);
+        return foundUser.getFriends();
     }
 
     public List<Friends> getAllFriendsOfUser(String userName){
@@ -36,5 +45,9 @@ public class FriendsService {
         friendsList.removeIf(x -> x.getId().equals(friendId));
         userRepository.save(foundUser);
         friendsRepository.deleteById(friendId);
+    }
+
+    public Friends findByFriendName(String friendName){
+        return friendsRepository.findByFriendName(friendName);
     }
 }

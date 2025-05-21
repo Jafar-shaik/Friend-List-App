@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,5 +28,8 @@ public class UserService {
     public void deleteUser(String name){
         User findedUser=userRepository.findUserByName(name);
         userRepository.delete(findedUser);
+    }
+    public void deleteById(ObjectId id){
+        userRepository.deleteById(id);
     }
 }

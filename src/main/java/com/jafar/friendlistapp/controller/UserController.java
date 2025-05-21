@@ -3,6 +3,7 @@ package com.jafar.friendlistapp.controller;
 
 import com.jafar.friendlistapp.entity.User;
 import com.jafar.friendlistapp.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,10 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete/id/{id}")
+    public void deleteById(@PathVariable ObjectId id){
+        userService.deleteById(id);
     }
 }
