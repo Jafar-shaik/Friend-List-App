@@ -7,6 +7,7 @@ import com.jafar.friendlistapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class FriendsController {
         }return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Transactional
     @PutMapping("/update/{userName}/{friendName}")
     public ResponseEntity<?> updateFriendOfUser(@PathVariable String userName,
                                                 @PathVariable String friendName,
@@ -60,6 +62,7 @@ public class FriendsController {
         }return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Transactional
     @DeleteMapping("/delete/{userName}/{friendName}")
     public ResponseEntity<?> deleteFriendOfUser(@PathVariable String userName, @PathVariable String friendName){
         User foundUser = userService.getByUserName(userName);

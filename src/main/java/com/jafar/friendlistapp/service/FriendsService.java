@@ -7,6 +7,7 @@ import com.jafar.friendlistapp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class FriendsService {
         friendsRepository.deleteById(id);
     }
 
+    @Transactional
     public List<Friends> saveFriendToUser(Friends friends, String  userName){
         User foundUser = userRepository.findUserByName(userName);
         Friends savedFriends = friendsRepository.save(friends);
@@ -37,14 +39,6 @@ public class FriendsService {
     public List<Friends> getAllFriendsOfUser(String userName){
         User foundUser = userRepository.findUserByName(userName);
         return foundUser.getFriends();
-    }
-
-    public void deleteFriendOfUser(ObjectId friendId , String userName){
-        User foundUser = userRepository.findUserByName(userName);
-        List<Friends>  friendsList=foundUser.getFriends();
-        friendsList.removeIf(x -> x.getId().equals(friendId));
-        userRepository.save(foundUser);
-        friendsRepository.deleteById(friendId);
     }
 
     public Friends findByFriendName(String friendName){

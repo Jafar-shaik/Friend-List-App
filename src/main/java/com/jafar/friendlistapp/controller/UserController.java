@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Transactional
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         User saved = userService.saveUser(user);
@@ -32,6 +34,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @Transactional
     @PutMapping("/update/{userName}")
     public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userName) {
         User foundUser = userService.getByUserName(userName);
@@ -45,6 +48,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @Transactional
     @DeleteMapping("/delete/{userName}")
     public ResponseEntity<?> deleteUser(@PathVariable String userName) {
         User foundUser = userService.getByUserName(userName);
