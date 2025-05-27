@@ -22,6 +22,9 @@ public class User {
     @NonNull
     @Indexed(unique = true)
     private String name;
+    private String password;
+    private List<String > roles ;
+
     @DBRef
     private List<Friends> friends=new ArrayList<>();
 }
